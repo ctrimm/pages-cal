@@ -29,6 +29,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
+          PUBLIC_URL: https://ctrimm.github.io/pages-cal
           REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           REACT_APP_GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
 
