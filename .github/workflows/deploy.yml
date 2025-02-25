@@ -26,6 +26,7 @@ jobs:
 
       - name: Create env file
         run: |
+          echo "PUBLIC_URL=https://ctrimm.github.io/pages-cal" >> .env
           echo "REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
           echo "REACT_APP_GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> .env
 
