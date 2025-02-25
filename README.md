@@ -1,4 +1,4 @@
-# Cal Clone
+# WIP - Cal Clone
 
 A GitHub Pages-based scheduling application similar to Calendly or TidyCal. This app allows users to display their availability and let visitors book time slots for meetings.
 
@@ -236,23 +236,52 @@ To use this application with Google Calendar, you need to set up API access:
 
 ## Deployment to GitHub Pages
 
-To deploy this application to GitHub Pages:
+This application is automatically deployed to GitHub Pages using GitHub Actions. The deployment workflow:
 
-1. Update the `homepage` field in `package.json` with your GitHub Pages URL:
-   ```json
-   "homepage": "https://yourusername.github.io/cal-clone"
-   ```
+1. Builds the application with the correct environment variables
+2. Creates necessary files for GitHub Pages SPA support (404.html, .nojekyll)
+3. Deploys to the gh-pages branch
 
-2. Deploy manually with npm:
+### Required Environment Setup
+
+1. In your repository's Settings > Secrets and variables > Actions, add these secrets:
+   - `GOOGLE_CLIENT_ID`: Your Google OAuth client ID
+   - `GOOGLE_API_KEY`: Your Google Calendar API key
+   - `GITHUB_TOKEN`: Automatically provided by GitHub Actions
+
+2. In your repository's Settings > Pages:
+   - Set the source to "Deploy from a branch"
+   - Select the "gh-pages" branch
+   - Save the changes
+
+### Development Environment
+
+For local development:
+
+1. Create a `.env` file in the root directory:
    ```bash
-   npm run deploy
+   # Development environment variables
+   PUBLIC_URL=""
+   REACT_APP_GOOGLE_CLIENT_ID="your-client-id"
+   REACT_APP_GOOGLE_API_KEY="your-api-key"
    ```
 
-3. Or set up automatic deployment with GitHub Actions:
-   - The workflow file is already included in `.github/workflows/deploy.yml`
-   - Just push your changes to the main branch, and GitHub Actions will automatically build and deploy your application
+2. Start the development server:
+   ```bash
+   npm start
+   ```
 
-4. After deployment, your application will be available at `https://yourusername.github.io/cal-clone`
+The application will use mock calendar data in development unless you provide valid Google Calendar credentials.
+
+### Production Environment
+
+The production environment variables are automatically set by the GitHub Actions workflow in `.github/workflows/deploy.yml`. The workflow:
+
+1. Sets `PUBLIC_URL` to your GitHub Pages URL
+2. Injects Google Calendar credentials from repository secrets
+3. Creates necessary files for GitHub Pages hosting
+
+After pushing to the main branch, your application will be automatically deployed to `https://[username].github.io/pages-cal`
 
 ## Custom Domain Setup
 
