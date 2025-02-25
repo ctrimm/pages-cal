@@ -24,18 +24,24 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Create env file
+      - name: Build with environment
         run: |
-          echo "PUBLIC_URL=https://ctrimm.github.io/pages-cal" >> .env
-          echo "REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
-          echo "REACT_APP_GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" >> .env
-
-      - name: Build
-        run: npm run build
-        env:
-          PUBLIC_URL: https://ctrimm.github.io/pages-cal
-          REACT_APP_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          REACT_APP_GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          # Create .env file
+          cat > .env << EOL
+          PUBLIC_URL=https://ctrimm.github.io/pages-cal
+          REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          REACT_APP_GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}
+          EOL
+          
+          # Display env file for debugging (excluding secrets)
+          echo "Contents of .env file (public vars only):"
+          grep "PUBLIC_URL" .env
+          
+          # Run build with env vars
+          export PUBLIC_URL=https://ctrimm.github.io/pages-cal
+          export REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          export REACT_APP_GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}
+          npm run build
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
