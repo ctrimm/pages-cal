@@ -2,6 +2,8 @@
 
 A GitHub Pages-based scheduling application similar to Calendly or TidyCal. This app allows users to display their availability and let visitors book time slots for meetings.
 
+![Preview of Cal Clone](preview1.png)
+
 ## Features
 
 - Display multiple meeting types with different durations
@@ -14,9 +16,11 @@ A GitHub Pages-based scheduling application similar to Calendly or TidyCal. This
 
 ## Demo
 
-You can see a live demo of this application at: [https://yourusername.github.io/cal-clone](https://yourusername.github.io/cal-clone)
+You can see a live demo of this application at: [https://ctrimm.github.io/cal-clone](https://ctrimm.github.io/cal-clone)
 
 ## Getting Started
+
+![Preview of Cal Clone 2](preview2.png)
 
 ### Prerequisites
 
@@ -29,7 +33,7 @@ You can see a live demo of this application at: [https://yourusername.github.io/
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/cal-clone.git
+   git clone https://github.com/ctrimm/cal-clone.git
    cd cal-clone
    ```
 
