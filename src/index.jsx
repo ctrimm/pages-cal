@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import App from './App';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import './styles.css';
 
 // Add some debug logging
