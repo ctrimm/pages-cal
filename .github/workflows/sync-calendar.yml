@@ -1,0 +1,38 @@
+name: Sync Calendar Availability
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Run every 15 minutes
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          npm install googleapis
+
+      - name: Sync Calendar
+        run: node .github/scripts/sync-calendar.js
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add public/availability.json
+          git commit -m "Update calendar availability" || exit 0
+          git push
