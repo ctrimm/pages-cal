@@ -99,7 +99,7 @@ const Calendar = () => {
       return () => [];
     }
     
-    return (date) => {
+    return (date, currentBusySlots) => {
       const slots = [];
       const { start, end } = config.availability.workingHours;
       const [startHour, startMinute] = start.split(':').map(Number);
@@ -119,7 +119,7 @@ const Calendar = () => {
         const slotEnd = new Date(time.getTime() + meetingType.duration * 60000);
         
         // Check if slot conflicts with any busy slots
-        const isConflicting = busySlots.some(event => {
+        const isConflicting = currentBusySlots.some(event => {
           const eventStart = new Date(event.start);
           const eventEnd = new Date(event.end);
           return (
@@ -139,8 +139,8 @@ const Calendar = () => {
   }, [config, meetingType]);
 
   const timeSlots = useMemo(
-    () => generateTimeSlots(selectedDate),
-    [selectedDate, busySlots, generateTimeSlots]
+    () => generateTimeSlots(selectedDate, busySlots),
+    [selectedDate, generateTimeSlots, busySlots]
   );
 
   if (!config || !meetingType) return <div>Loading...</div>;
