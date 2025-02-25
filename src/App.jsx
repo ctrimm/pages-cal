@@ -92,47 +92,51 @@ const Calendar = () => {
     };
 
     fetchBusySlots();
-  }, [selectedDate, calendarService]);
+  }, [selectedDate, calendarService, config, meetingType]);
 
   const generateTimeSlots = useMemo(() => {
+    if (!config || !meetingType) {
+      return () => [];
+    }
+    
     return (date) => {
-      if (!config || !meetingType) return [];
-      
       const slots = [];
       const { start, end } = config.availability.workingHours;
       const [startHour, startMinute] = start.split(':').map(Number);
       const [endHour, endMinute] = end.split(':').map(Number);
       
-      let currentTime = new Date(date);
-      currentTime.setHours(startHour, startMinute, 0);
+      const startTime = new Date(date);
+      startTime.setHours(startHour, startMinute, 0);
       
       const endTime = new Date(date);
       endTime.setHours(endHour, endMinute, 0);
 
-      while (currentTime < endTime) {
-        const slotEnd = new Date(currentTime.getTime() + meetingType.duration * 60000);
+      for (
+        let time = new Date(startTime);
+        time < endTime;
+        time = new Date(time.getTime() + meetingType.duration * 60000)
+      ) {
+        const slotEnd = new Date(time.getTime() + meetingType.duration * 60000);
         
         // Check if slot conflicts with any busy slots
         const isConflicting = busySlots.some(event => {
-          const eventStart = new Date(event.start.dateTime);
-          const eventEnd = new Date(event.end.dateTime);
+          const eventStart = new Date(event.start);
+          const eventEnd = new Date(event.end);
           return (
-            (currentTime >= eventStart && currentTime < eventEnd) ||
+            (time >= eventStart && time < eventEnd) ||
             (slotEnd > eventStart && slotEnd <= eventEnd) ||
-            (currentTime <= eventStart && slotEnd >= eventEnd)
+            (time <= eventStart && slotEnd >= eventEnd)
           );
         });
 
         if (!isConflicting) {
-          slots.push(new Date(currentTime));
+          slots.push(new Date(time));
         }
-        
-        currentTime = slotEnd;
       }
 
       return slots;
     };
-  }, [config, meetingType, busySlots]);
+  }, [config, meetingType]);
 
   const timeSlots = useMemo(
     () => generateTimeSlots(selectedDate),
