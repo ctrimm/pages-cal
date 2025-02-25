@@ -1,0 +1,41 @@
+{
+  "profile": {
+    "name": "Demo User",
+    "imageUrl": "https://github.com/shadcn.png",
+    "timezone": "America/Sao_Paulo"
+  },
+  "meetingTypes": [
+    {
+      "id": "intro-call",
+      "title": "Introduction Call",
+      "duration": 30,
+      "description": "A quick call to discuss your needs.",
+      "additionalInfo": "No preparation needed.",
+      "price": 0
+    },
+    {
+      "id": "consultation",
+      "title": "Consultation",
+      "duration": 60,
+      "description": "In-depth consultation session.",
+      "additionalInfo": "Please prepare your questions in advance.",
+      "price": 0
+    }
+  ],
+  "availability": {
+    "workingHours": {
+      "start": "09:00",
+      "end": "17:00"
+    },
+    "workingDays": [1, 2, 3, 4, 5],
+    "slotDuration": 15,
+    "bufferBetweenMeetings": 15,
+    "maxBookingWindow": 60
+  },
+  "ui": {
+    "primaryColor": "#000000",
+    "secondaryColor": "#4f46e5",
+    "backgroundColor": "#ffffff",
+    "fontFamily": "'Inter', sans-serif"
+  }
+}

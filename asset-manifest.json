@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "https://ctrimm.github.io/pages-cal/static/css/main.6593b340.css",
+    "main.js": "https://ctrimm.github.io/pages-cal/static/js/main.592461b9.js",
+    "index.html": "https://ctrimm.github.io/pages-cal/index.html",
+    "main.6593b340.css.map": "https://ctrimm.github.io/pages-cal/static/css/main.6593b340.css.map",
+    "main.592461b9.js.map": "https://ctrimm.github.io/pages-cal/static/js/main.592461b9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6593b340.css",
+    "static/js/main.592461b9.js"
+  ]
+}
