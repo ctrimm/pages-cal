@@ -10,10 +10,49 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('Fetching config from:', `${process.env.PUBLIC_URL}/config.json`);
     fetch(`${process.env.PUBLIC_URL}/config.json`)
-      .then(response => response.json())
-      .then(data => setConfig(data))
-      .catch(error => console.error('Error loading config:', error));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Config loaded:', data);
+        setConfig(data);
+      })
+      .catch(error => {
+        console.error('Error loading config:', error);
+        // Set a default config for development/testing
+        setConfig({
+          profile: {
+            name: "Demo User",
+            imageUrl: "https://github.com/shadcn.png",
+            timezone: "America/Sao_Paulo"
+          },
+          meetingTypes: [
+            {
+              id: "intro-call",
+              title: "Introduction Call",
+              duration: 30,
+              description: "A quick call to discuss your needs.",
+              additionalInfo: "No preparation needed.",
+              price: 0
+            }
+          ],
+          availability: {
+            workingHours: {
+              start: "09:00",
+              end: "17:00"
+            },
+            workingDays: [1, 2, 3, 4, 5],
+            slotDuration: 15,
+            bufferBetweenMeetings: 15,
+            maxBookingWindow: 60
+          }
+        });
+      });
   }, []);
 
   if (!config) return <div>Loading...</div>;
@@ -66,10 +105,49 @@ const Calendar = () => {
 
   // Load config
   useEffect(() => {
+    console.log('Calendar: Fetching config from:', `${process.env.PUBLIC_URL}/config.json`);
     fetch(`${process.env.PUBLIC_URL}/config.json`)
-      .then(response => response.json())
-      .then(data => setConfig(data))
-      .catch(error => console.error('Error loading config:', error));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Calendar: Config loaded:', data);
+        setConfig(data);
+      })
+      .catch(error => {
+        console.error('Calendar: Error loading config:', error);
+        // Set a default config for development/testing
+        setConfig({
+          profile: {
+            name: "Demo User",
+            imageUrl: "https://github.com/shadcn.png",
+            timezone: "America/Sao_Paulo"
+          },
+          meetingTypes: [
+            {
+              id: "intro-call",
+              title: "Introduction Call",
+              duration: 30,
+              description: "A quick call to discuss your needs.",
+              additionalInfo: "No preparation needed.",
+              price: 0
+            }
+          ],
+          availability: {
+            workingHours: {
+              start: "09:00",
+              end: "17:00"
+            },
+            workingDays: [1, 2, 3, 4, 5],
+            slotDuration: 15,
+            bufferBetweenMeetings: 15,
+            maxBookingWindow: 60
+          }
+        });
+      });
   }, []);
 
   // Fetch busy slots for the selected date
